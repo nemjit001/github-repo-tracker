@@ -1,10 +1,11 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.6-alpine3.7
+FROM tiangolo/uwsgi-nginx-flask:python3.6
 
-# set the new working directory
-WORKDIR /var/www/repository_tracker_api
-COPY . /var/www/repository_tracker_api
+# setting up the environment
+COPY . /app
+WORKDIR /app
 
 # install dependencies
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # set up necessary environment variablers
