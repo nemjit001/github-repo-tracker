@@ -1,0 +1,25 @@
+# Tijmen Verhoef's giant .gitignore
+
+# C/C++ excludes
+build/ 
+
+# Django excludes
+*.log
+*.pot
+
+# Editor excludes
+.vscode/
+
+# General excludes
+database
+database.*
+db.*
+*.db
+
+# Java/Scala excludes
+
+# Mbed excludes
+
+# Python excludes
+__pycache__/
+venv/
