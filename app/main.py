@@ -1,8 +1,9 @@
 import requests, json, os
 from flask import Flask
+from flask_cors import CORS
 
 app = Flask(__name__)
-versionNum = os.getenv('API_VERSION', '1.0.0')
+CORS(app)
 
 githubURL = 'https://api.github.com/graphql'
 OAuthKey = os.getenv('GITHUB_API_KEY')
@@ -28,18 +29,13 @@ requestData = " \
 } \
 "
 
-@app.route('/', methods=['GET'])
-def index():
-    responseData = {"version": versionNum}
-    return json.dumps(responseData), 200
-
 @app.route('/repositories', methods=['GET'])
 def getAll():
     response = requests.post(githubURL, data=requestData, headers=requestHeaders)
 
     if response.status_code != 200:
         responseData = {"error": "failed to fetch data", "errorcode": response.status_code}
-        return json.dumps(responseData), 404
+        return json.dumps(responseData), response.status_code
 
     serverResponse = response.json()
     viewerData = serverResponse['data']['viewer']
