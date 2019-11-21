@@ -8,5 +8,5 @@ WORKDIR /app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-EXPOSE 80:443
+EXPOSE 80
 EXPOSE 443
