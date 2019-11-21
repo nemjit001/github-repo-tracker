@@ -12,7 +12,7 @@ if (os.getenv('GITHUB_API_KEY', None) != None):
 
 if (os.getenv('GITHUB_API_KEY_FILE', None) != None):
     f = open(os.getenv('GITHUB_API_KEY_FILE'), 'r')
-    OAuthKey = f.read()
+    OAuthKey = f.readline().replace('\n', '')
     f.close()
 
 githubURL = 'https://api.github.com/graphql'
