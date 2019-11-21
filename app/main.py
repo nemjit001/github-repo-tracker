@@ -7,13 +7,13 @@ CORS(app)
 
 OAuthKey = ""
 
-if (os.getenv('GITHUB_API_KEY', None) == None):
-    if (os.getenv('GITHUB_API_KEY_FILE', None) != None):
-        f = open(os.getenv('GITHUB_API_KEY_FILE'), 'r')
-        OAuthKey = f.read()
-        f.close()
-else:
+if (os.getenv('GITHUB_API_KEY', None) != None):
     OAuthKey = os.getenv('GITHUB_API_KEY')
+
+if (os.getenv('GITHUB_API_KEY_FILE', None) != None):
+    f = open(os.getenv('GITHUB_API_KEY_FILE'), 'r')
+    OAuthKey = f.read()
+    f.close()
 
 githubURL = 'https://api.github.com/graphql'
 requestHeaders = {'Authorization': f'bearer {OAuthKey}'}
