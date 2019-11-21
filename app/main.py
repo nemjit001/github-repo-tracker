@@ -5,8 +5,17 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+OAuthKey = ""
+
+if (os.getenv('GITHUB_API_KEY', None) == None):
+    if (os.getenv('GITHUB_API_KEY_FILE', None) != None):
+        f = open(os.getenv('GITHUB_API_KEY_FILE'), 'r')
+        OAuthKey = f.read()
+        f.close()
+else:
+    OAuthKey = os.getenv('GITHUB_API_KEY')
+
 githubURL = 'https://api.github.com/graphql'
-OAuthKey = os.getenv('GITHUB_API_KEY')
 requestHeaders = {'Authorization': f'bearer {OAuthKey}'}
 requestData = " \
 { \
