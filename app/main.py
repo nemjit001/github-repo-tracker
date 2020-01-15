@@ -44,7 +44,7 @@ def getContributed():
 
     responseData = { "login": viewerData['login'], "name": viewerData['name'], "repositories": repositoryData }
 
-    return responseData, 200
+    return json.dumps(responseData), 200
 
 @app.route('/repositories', methods=['GET'])
 def getRepositories():
