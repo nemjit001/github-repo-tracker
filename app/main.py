@@ -31,7 +31,20 @@ def getOrganizations():
 
 @app.route('/contributed')
 def getContributed():
-    return "Not yet implemented", 200
+    requestData = getRequestData('app/contributionRequest.json')
+    response = requests.post(githubURL, data=requestData, headers=requestHeaders)
+
+    if response.status_code != 200:
+        responseData = {"error": "failed to fetch data", "errorcode": response.status_code}
+        return json.dumps(responseData), response.status_code
+
+    serverResponse = response.json()
+    viewerData = serverResponse['data']['viewer']
+    repositoryData = serverResponse['data']['viewer']['repositories']['nodes']
+
+    responseData = { "login": viewerData['login'], "name": viewerData['name'], "repositories": repositoryData }
+
+    return json.dumps(responseData), 200
 
 @app.route('/repositories', methods=['GET'])
 def getRepositories():
