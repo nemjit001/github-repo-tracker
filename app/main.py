@@ -12,34 +12,26 @@ if (os.getenv('GITHUB_API_KEY', None) != None):
 
 if (os.getenv('GITHUB_API_KEY_FILE', None) != None):
     f = open(os.getenv('GITHUB_API_KEY_FILE'), 'r')
-    OAuthKey = f.read()
+    OAuthKey = f.readline().replace('\n', '')
     f.close()
 
 githubURL = 'https://api.github.com/graphql'
 requestHeaders = {'Authorization': f'bearer {OAuthKey}'}
-requestData = " \
-{ \
-    \"query\": \"query { \
-        viewer { \
-            repositories(first: 100, affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER]) { \
-                totalCount \
-                nodes { \
-                    name \
-                    url \
-                    description \
-                    isPrivate \
-                    id \
-                } \
-            } \
-            login \
-            name \
-        } \
-    } \" \
-} \
-"
+
+def getRequestData(filepath):
+    requestFile = open(filepath, 'r')
+    requestData = requestFile.read()
+    requestFile.close()
+
+    return requestData
+
+@app.route('/companies', methods=['GET'])
+def getCompanies():
+    return "Not yet implemented", 200
 
 @app.route('/repositories', methods=['GET'])
-def getAll():
+def getRepositories():
+    requestData = getRequestData('app/repositoryRequest.json')
     response = requests.post(githubURL, data=requestData, headers=requestHeaders)
 
     if response.status_code != 200:

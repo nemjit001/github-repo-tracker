@@ -1,0 +1,3 @@
+{
+    "query": "query { \nviewer { \nrepositories(first: 100, affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER]) { \ntotalCount \nnodes { \nname \nurl \ndescription \nisPrivate \nid \n} \n} \nlogin \nname \n} \n}\n"
+}
