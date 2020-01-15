@@ -25,8 +25,12 @@ def getRequestData(filepath):
 
     return requestData
 
-@app.route('/companies', methods=['GET'])
-def getCompanies():
+@app.route('/organizations', methods=['GET'])
+def getOrganizations():
+    return "Not yet implemented", 200
+
+@app.route('/contributed')
+def getContributed():
     return "Not yet implemented", 200
 
 @app.route('/repositories', methods=['GET'])
