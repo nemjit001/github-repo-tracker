@@ -40,11 +40,11 @@ def getContributed():
 
     serverResponse = response.json()
     viewerData = serverResponse['data']['viewer']
-    repositoryData = serverResponse['data']['viewer']['repositories']['nodes']
+    repositoryData = serverResponse['data']['viewer']['repositoriesContributedTo']['nodes']
 
     responseData = { "login": viewerData['login'], "name": viewerData['name'], "repositories": repositoryData }
 
-    return json.dumps(responseData), 200
+    return responseData, 200
 
 @app.route('/repositories', methods=['GET'])
 def getRepositories():
