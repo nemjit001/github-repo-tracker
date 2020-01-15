@@ -25,9 +25,26 @@ def getRequestData(filepath):
 
     return requestData
 
-@app.route('/companies', methods=['GET'])
-def getCompanies():
+@app.route('/organizations', methods=['GET'])
+def getOrganizations():
     return "Not yet implemented", 200
+
+@app.route('/contributed')
+def getContributed():
+    requestData = getRequestData('app/contributionRequest.json')
+    response = requests.post(githubURL, data=requestData, headers=requestHeaders)
+
+    if response.status_code != 200:
+        responseData = {"error": "failed to fetch data", "errorcode": response.status_code}
+        return json.dumps(responseData), response.status_code
+
+    serverResponse = response.json()
+    viewerData = serverResponse['data']['viewer']
+    repositoryData = serverResponse['data']['viewer']['repositoriesContributedTo']['nodes']
+
+    responseData = { "login": viewerData['login'], "name": viewerData['name'], "repositories": repositoryData }
+
+    return json.dumps(responseData), 200
 
 @app.route('/repositories', methods=['GET'])
 def getRepositories():

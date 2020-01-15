@@ -23,3 +23,5 @@ db.*
 # Python excludes
 __pycache__/
 venv/
+
+*.env
