@@ -1,0 +1,3 @@
+{
+    "query": "query { \nviewer { \nlogin \nname \norganizations(first: 100) { \ntotalCount \nnodes { \nisVerified \nurl \ndescription \nid \nname \n} \n} \n} \n} \n"
+}
