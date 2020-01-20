@@ -1,4 +1,4 @@
-import requests, json, os
+import requests, json, os, markdown
 from flask import Flask
 from flask_cors import CORS
 
@@ -25,9 +25,29 @@ def getRequestData(filepath):
 
     return requestData
 
+@app.route('/', methods=['GET'])
+def home():
+    md_file = open('README.md', 'r')
+    data = md_file.read()
+    md_file.close()
+    return markdown.markdown(data)
+
 @app.route('/organizations', methods=['GET'])
 def getOrganizations():
-    return "Not yet implemented", 200
+    requestData = getRequestData('app/companyRequest.json')
+    response = response = requests.post(githubURL, data=requestData, headers=requestHeaders)
+
+    if response.status_code != 200:
+        responseData = {"error": "failed to fetch data", "errorcode": response.status_code}
+        return json.dumps(responseData), response.status_code
+
+    serverResponse = response.json()
+    viewerData = serverResponse['data']['viewer']
+    repositoryData = serverResponse['data']['viewer']['organizations']['nodes']
+
+    responseData = { "login": viewerData['login'], "name": viewerData['name'], "organizations": repositoryData }
+
+    return json.dumps(responseData), 200
 
 @app.route('/contributed')
 def getContributed():
