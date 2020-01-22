@@ -62,7 +62,11 @@ def getContributed():
     viewerData = serverResponse['data']['viewer']
     repositoryData = serverResponse['data']['viewer']['repositoriesContributedTo']['nodes']
 
-    responseData = { "login": viewerData['login'], "name": viewerData['name'], "repositories": repositoryData }
+    responseData = { "login": viewerData['login'], "name": viewerData['name'], "repositories": [] }
+
+    for element in repositoryData:
+        if not element['isPrivate']:
+            responseData['repositories'].append(element)
 
     return json.dumps(responseData), 200
 
