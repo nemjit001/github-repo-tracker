@@ -39,7 +39,7 @@ def getOrganizations():
 
     if response.status_code != 200:
         responseData = {"error": "failed to fetch data", "errorcode": response.status_code}
-        return json.dumps(responseData), response.status_code
+        return responseData, response.status_code
 
     serverResponse = response.json()
     viewerData = serverResponse['data']['viewer']
@@ -47,7 +47,7 @@ def getOrganizations():
 
     responseData = { "login": viewerData['login'], "name": viewerData['name'], "organizations": repositoryData }
 
-    return json.dumps(responseData), 200
+    return responseData, 200
 
 @app.route('/contributed')
 def getContributed():
@@ -56,7 +56,7 @@ def getContributed():
 
     if response.status_code != 200:
         responseData = {"error": "failed to fetch data", "errorcode": response.status_code}
-        return json.dumps(responseData), response.status_code
+        return responseData, response.status_code
 
     serverResponse = response.json()
     viewerData = serverResponse['data']['viewer']
@@ -64,7 +64,7 @@ def getContributed():
 
     responseData = { "login": viewerData['login'], "name": viewerData['name'], "repositories": repositoryData }
 
-    return json.dumps(responseData), 200
+    return responseData, 200
 
 @app.route('/repositories', methods=['GET'])
 def getRepositories():
@@ -73,7 +73,7 @@ def getRepositories():
 
     if response.status_code != 200:
         responseData = {"error": "failed to fetch data", "errorcode": response.status_code}
-        return json.dumps(responseData), response.status_code
+        return responseData, response.status_code
 
     serverResponse = response.json()
     viewerData = serverResponse['data']['viewer']
@@ -85,7 +85,7 @@ def getRepositories():
         if not element['isPrivate']:
             responseData['repositories'].append(element)
 
-    return json.dumps(responseData), 200
+    return responseData, 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, debug=True)
