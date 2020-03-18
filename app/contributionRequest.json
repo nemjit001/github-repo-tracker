@@ -1,3 +1,3 @@
 {
-    "query": "query { \nviewer { \nlogin \nname \nrepositoriesContributedTo(first: 100, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) { \ntotalCount \nnodes { \nnameWithOwner \nurl \ndescription \nid \nname \n} \npageInfo { \nendCursor \nhasNextPage \n} \n} \n} \n} \n"
+    "query": "query { \nviewer { \nlogin \nname \nrepositoriesContributedTo(first: 100, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) { \ntotalCount \nnodes { \nnameWithOwner \nurl \ndescription \nid \nname \n isPrivate\n} \npageInfo { \nendCursor \nhasNextPage \n} \n} \n} \n} \n"
 }
